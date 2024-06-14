@@ -1,5 +1,6 @@
 import { useState } from "react"
 import CryptoJS from "crypto-js"
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button, Form, InputGroup } from "react-bootstrap"
 
 export default function Decrypt() {
@@ -17,7 +18,10 @@ export default function Decrypt() {
 
     const [initVector, setInitVector] = useState('')
     const [ciphertext, setCiphertext] = useState('')
+
+    const [hideSecret, setHideSecret] = useState(true)
     const [secret, setSecret] = useState("")
+
     const [mode, setMode] = useState("ECB")
     const [padding, setPadding] = useState("PKCS5")
     const [output, setOutput] = useState("")
@@ -51,14 +55,20 @@ export default function Decrypt() {
                     <Form.Control as='textarea' rows={3}
                         onChange={(e) => setCiphertext(e.target.value)} value={ciphertext}
                     />
-                 </InputGroup>
-                 <InputGroup className="mb-4">
-                    <InputGroup.Text>Secret Key</InputGroup.Text>
-                    <Form.Control type="text" value={secret} onChange={(e) => setSecret(e.target.value)} />
                 </InputGroup>
                 <InputGroup className="mb-4">
-                <InputGroup.Text >Cipher Mode</InputGroup.Text>
-                <Form.Select value={mode} onChange={(e) => setMode(e.target.value)}>
+                    <InputGroup.Text>Secret Key</InputGroup.Text>
+                    {
+                        hideSecret ?
+                        <Button variant="light" onClick={()=>setHideSecret(false)}><FaEyeSlash /></Button> :
+                        <Button variant="light" onClick={()=>setHideSecret(true)}><FaEye/></Button>
+                    }
+                    <Form.Control type={hideSecret ? "password" : "text"} value={secret} onChange={(e) => setSecret(e.target.value)} />
+                    <Button variant="dark" onClick={()=>setSecret("")} >Clear</Button>
+                </InputGroup>
+                <InputGroup className="mb-4">
+                    <InputGroup.Text >Cipher Mode</InputGroup.Text>
+                    <Form.Select value={mode} onChange={(e) => setMode(e.target.value)}>
                         <option value={"ECB"}>ECB</option>
                         <option value={"CBC"}>CBC</option>
                     </Form.Select>
