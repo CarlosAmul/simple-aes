@@ -1,7 +1,7 @@
 import { useState } from "react"
 import CryptoJS from "crypto-js"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Button, Form, InputGroup } from "react-bootstrap"
+import { Button, Form, FormControl, FormGroup, InputGroup } from "react-bootstrap"
 
 export default function Decrypt() {
 
@@ -31,6 +31,7 @@ export default function Decrypt() {
         var key = CryptoJS.enc.Utf8.parse(secret)
         var cipherBytes = CryptoJS.enc.Base64.parse(ciphertext)
 
+
         const decrypted = CryptoJS.AES.decrypt({ ciphertext: cipherBytes }, key, {
             initVector: iv,
             mode: cipherModes[mode],
@@ -50,22 +51,24 @@ export default function Decrypt() {
         <div id="decrypt-container">
             <Form>
                 <h1 className="mb-4">Decrypt</h1>
-                <InputGroup className="mb-4">
-                    <InputGroup.Text>Ciphertext:</InputGroup.Text>
-                    <Form.Control as='textarea' rows={3}
+                <Form.Group className="mb-4">
+                    <Form.Label>Ciphertext:</Form.Label>
+                    <Form.Control as='textarea' rows={3} 
                         onChange={(e) => setCiphertext(e.target.value)} value={ciphertext}
                     />
-                </InputGroup>
-                <InputGroup className="mb-4">
-                    <InputGroup.Text>Secret Key</InputGroup.Text>
-                    {
-                        hideSecret ?
-                        <Button variant="light" onClick={()=>setHideSecret(false)}><FaEyeSlash /></Button> :
-                        <Button variant="light" onClick={()=>setHideSecret(true)}><FaEye/></Button>
-                    }
-                    <Form.Control type={hideSecret ? "password" : "text"} value={secret} onChange={(e) => setSecret(e.target.value)} />
-                    <Button variant="dark" onClick={()=>setSecret("")} >Clear</Button>
-                </InputGroup>
+                </Form.Group>
+                <Form.Group className="mb-4">
+                    <Form.Label>Secret Key</Form.Label>
+                    <InputGroup>
+                        {
+                            hideSecret ?
+                                <Button variant="light" onClick={() => setHideSecret(false)}><FaEyeSlash /></Button> :
+                                <Button variant="light" onClick={() => setHideSecret(true)}><FaEye /></Button>
+                        }
+                        <Form.Control type={hideSecret ? "password" : "text"} value={secret} onChange={(e) => setSecret(e.target.value)} />
+                        <Button variant="dark" onClick={() => setSecret("")} >Clear</Button>
+                    </InputGroup>
+                </Form.Group>
                 <InputGroup className="mb-4">
                     <InputGroup.Text >Cipher Mode</InputGroup.Text>
                     <Form.Select value={mode} onChange={(e) => setMode(e.target.value)}>
@@ -80,10 +83,10 @@ export default function Decrypt() {
                         <option value={"PKCS5"}>PKCS5</option>
                     </Form.Select>
                 </InputGroup>
-                <InputGroup className="mb-4">
-                    <InputGroup.Text>Initialization Vector</InputGroup.Text>
+                <Form.Group className="mb-4">
+                    <Form.Label>Initialization Vector</Form.Label>
                     <Form.Control type="text" value={initVector} onChange={(e) => setInitVector(e.target.value)} />
-                </InputGroup>
+                </Form.Group>
 
                 <Button variant="dark" onClick={decrypt}>Decrypt</Button>
             </Form>
