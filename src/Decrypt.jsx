@@ -35,11 +35,17 @@ export default function Decrypt() {
         })
 
         setOutput(decrypted.toString(CryptoJS.enc.Utf8))
+        copyToClipboard(output)
+    }
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+        alert("Copied to clipboard!")
     }
 
     return (
         <div id="decrypt-container">
-                        <Form>
+            <Form>
                 <h1 className="mb-4">Decrypt</h1>
                 <Form.Group className="mb-4">
                     <Form.Label>Ciphertext:</Form.Label>
@@ -72,12 +78,6 @@ export default function Decrypt() {
 
                 <Button variant="dark" onClick={decrypt}>Decrypt</Button>
             </Form>
-            {output && <div id="result">
-                <p>
-                    {output}
-                </p>
-                <Button onClick={() => setOutput("")}>Clear</Button>
-            </div>}
         </div>
 
 

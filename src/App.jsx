@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div id='container'>
-      <Container fluid className='mt-5'>
+      <Container fluid className='mt-2'>
         <Col>
           <Card body id="decrypt-container" style={{ backgroundColor: '#EDEDED' }}>
             <div id='options'>
