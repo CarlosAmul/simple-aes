@@ -2,6 +2,7 @@ import { useState } from "react"
 import CryptoJS from "crypto-js"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button, Form, FormControl, FormGroup, InputGroup } from "react-bootstrap"
+import DecryptedModal from './Modals/DecryptedModal'
 
 export default function Decrypt() {
 
@@ -18,11 +19,13 @@ export default function Decrypt() {
 
     const [initVector, setInitVector] = useState('')
     const [ciphertext, setCiphertext] = useState('')    
+    const [output, setOutput] = useState('')
     const [secret, setSecret] = useState("")
     const [mode, setMode] = useState("ECB")
     const [padding, setPadding] = useState("PKCS5")
 
     const [hideSecret, setHideSecret] = useState(true)
+    const [showOutput, setShowOutput] = useState(false)
 
     function decrypt() {
         var iv = CryptoJS.enc.Base64.parse(initVector)
@@ -35,6 +38,7 @@ export default function Decrypt() {
             mode: cipherModes[mode],
             padding: paddingOptions[padding]
         })
+        setOutput(decrypted.toString(CryptoJS.enc.Utf8))
         copyToClipboard(decrypted.toString(CryptoJS.enc.Utf8))
     }
 
@@ -90,7 +94,10 @@ export default function Decrypt() {
                 </Form.Group>
 
                 <Button variant="dark" onClick={decrypt}>Decrypt</Button>
+                {output && <Button variant="link" onClick={()=>setShowOutput(true)}>Not in clipboard?</Button>}
             </Form>
+            <DecryptedModal output={output} clear={()=>setOutput("")} open={showOutput} setOpen={setShowOutput} />
+
         </div>
     )
 
