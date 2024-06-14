@@ -1,5 +1,6 @@
 import { useState } from "react"
 import CryptoJS from "crypto-js"
+import { Button, Card, Form, Row } from "react-bootstrap"
 
 export default function Decrypt() {
 
@@ -38,47 +39,49 @@ export default function Decrypt() {
 
     return (
         <div id="decrypt-container">
-            <h1>Decrypt</h1>
-            <div id='ciphertext-input'>
-                <label>Ciphertext: </label>
-                <textarea onChange={(e) => setCiphertext(e.target.value)} value={ciphertext} />
-            </div>
-            <div id="mode-select">
-                <label>Cipher Mode</label>
-                <select value={mode} onChange={(e) => setMode(e.target.value)}>
-                    <option value={"ECB"}>ECB</option>
-                    <option value={"CBC"}>CBC</option>
-                </select>
-            </div>
-            <div id="padding-select">
-                <label>Select Padding</label>
-                <select value={padding} onChange={(e) => setPadding(e.target.value)}>
-                    <option value={"None"}>None</option>
-                    <option value={"PKCS5"}>PKCS5</option>
-                </select>
-            </div>
-            <div id="initialization-vector">
-                <label>Initialization Vector</label>
-                <input value={initVector} onChange={(e) => setInitVector(e.target.value)}/>
-            </div>
-            <div id="secret-key">
-                <label>Secret Key</label>
-                <input value={secret} onChange={(e) => setSecret(e.target.value)} />
-            </div>
-            <div id="results-container">
-                <button onClick={decrypt}>Decrypt</button>
-                {output && <div id="result-container" style={{ border: "1px solid black", padding: 20 }}>
-                    <div id="result">
-                        <p>
-                            {output}
-                        </p>
-                        <button onClick={() => setOutput("")}>Clear</button>
-                    </div>
+                        <Form>
+                <h1 className="mb-4">Decrypt</h1>
+                <Form.Group className="mb-4">
+                    <Form.Label>Ciphertext:</Form.Label>
+                    <Form.Control as='textarea' rows={3}
+                        onChange={(e) => setCiphertext(e.target.value)} value={ciphertext}
+                    />
+                </Form.Group>
+                <Form.Group className="mb-4">
+                    <Form.Label>Cipher Mode:</Form.Label>
+                    <Form.Select value={mode} onChange={(e) => setMode(e.target.value)}>
+                        <option value={"ECB"}>ECB</option>
+                        <option value={"CBC"}>CBC</option>
+                    </Form.Select>
+                </Form.Group>
+                <Form.Group className="mb-4">
+                    <Form.Label>Select Padding:</Form.Label>
+                    <Form.Select value={padding} onChange={(e) => setPadding(e.target.value)}>
+                        <option value={"None"}>None</option>
+                        <option value={"PKCS5"}>PKCS5</option>
+                    </Form.Select>
+                </Form.Group>
+                <Form.Group className="mb-4">
+                    <Form.Label>Initialization Vector</Form.Label>
+                    <Form.Control type="text" value={initVector} onChange={(e) => setInitVector(e.target.value)} />
+                </Form.Group>
+                <Form.Group className="mb-4">
+                    <Form.Label>Secret Key</Form.Label>
+                    <Form.Control type="text" value={secret} onChange={(e) => setSecret(e.target.value)} />
+                </Form.Group>
 
-                </div>}
-
-            </div>
+                <Button variant="dark" onClick={decrypt}>Decrypt</Button>
+            </Form>
+            {output && <div id="result">
+                <p>
+                    {output}
+                </p>
+                <Button onClick={() => setOutput("")}>Clear</Button>
+            </div>}
         </div>
+
+
+
     )
 
 }

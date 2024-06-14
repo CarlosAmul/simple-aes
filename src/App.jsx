@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Decrypt from './Decrypt'
 import Encrypt from './Encrypt'
+import { Button, ButtonGroup, Card, Col, Container } from 'react-bootstrap'
 
 function App() {
 
@@ -11,14 +12,33 @@ function App() {
 
   return (
     <div id='container'>
-      <div id='options'>
-        <button disabled={mode==='Encrypt'} onClick={()=>setMode("Encrypt")}>Encrypt</button>
-        <button disabled={mode==='Decrypt'} onClick={()=>setMode("Decrypt")}>Decrypt</button>
-      </div>
-       {
-          mode === "Decrypt" ?
-            <Decrypt /> : <Encrypt />
-        }
+      <Container fluid className='mt-5'>
+        <Col>
+          <Card body id="decrypt-container" style={{ backgroundColor: '#EDEDED' }}>
+            <div id='options'>
+              <ButtonGroup className='mb-5'>
+                <Button
+                  disabled={mode === 'Encrypt'} onClick={() => setMode("Encrypt")}
+                  variant='dark'>
+                  Encrypt
+                </Button>
+                <Button
+                  disabled={mode === 'Decrypt'} onClick={() => setMode("Decrypt")}
+                  variant='dark'>
+                  Decrypt
+                </Button>
+              </ButtonGroup>
+            </div>
+            {
+              mode === "Decrypt" ?
+                <Decrypt /> : <Encrypt />
+            }
+          </Card>
+        </Col>
+
+      </Container>
+
+
     </div>
   )
 }
