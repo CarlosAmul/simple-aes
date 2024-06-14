@@ -12,11 +12,11 @@ function App() {
 
   return (
     <div id='container'>
-      <Container fluid className='mt-2'>
+      <Container fluid className='mt-3'>
         <Col>
           <Card body id="decrypt-container" style={{ backgroundColor: '#EDEDED' }}>
             <div id='options'>
-              <ButtonGroup className='mb-5'>
+              <ButtonGroup className='mb-3'>
                 <Button
                   disabled={mode === 'Encrypt'} onClick={() => setMode("Encrypt")}
                   variant='dark'>
